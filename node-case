@@ -1,0 +1,54 @@
+#/ bin/bash
+
+#decleration section
+declare -a queue
+declare -i ind1=0
+declare -i ind2=0
+declare -a nodes=[]#store the IP/hostnames of all the nodes
+
+
+#polls the repo every 1 minute
+function_to_poll() {
+  #if there is a git commit call the push function
+  # return an array with the git commits in last one minute
+  return $array
+}
+
+
+
+#enqueue operation to insert an element to the queue
+enqueue() {
+  ind2=ind2+1
+  $queue[ind2]=$stat
+}
+
+  #checks the status of the nodees in the system
+status_of_node() {
+
+
+
+}
+
+assign_to_node() {
+
+
+
+  #call the pop function at the end of the assignment
+}
+
+#dequeue operation to delete element from the queue
+dequeue() {
+  $queue[]
+  ind1 = ind1 + 1
+
+}
+
+
+#Main code - the complete set of code should run in every 2 minutes
+stat=function_to_poll()
+#if stat is empty come out the main code function
+enqueue($stat)
+res=status_of_node
+#if res is returning 1 then there are resources
+assign_to_node() #pass the node array and the number of nodes as arguments, last elem of Q
+#end of main code
