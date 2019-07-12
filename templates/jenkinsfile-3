@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+    stages {
+		stage('Stage 1') {
+			steps {
+              echo "This is the build stage"
+			}
+		}
+
+	    stage('Stage 2') {
+            steps {
+              sh '''#!/bin/bash
+                      echo "Hello World"
+                  '''
+              sh  '''#!/bin/bash
+                     declare -a HOSTS
+                     declare -i res2
+                     USERNAME=raigon
+                     HOSTS=("10.136.228.185")
+                     SCRIPT="docker ps -a|grep cloud"
+                     SCRIPT2="docker run --name mynginx1 -p 80:80 -d nginx"
+                     echo ${HOSTS[*]}
+
+                     status(){
+                      for HOSTNAME in ${HOSTS} ; do
+                       avail=$(sshpass -p 'Saptm170@' ssh -o StrictHostKeyChecking=no ${USERNAME}@${HOSTNAME} "${SCRIPT}")
+                       echo "$avail"
+                       if test -z "$avail"
+                       then
+                        echo "Empty"
+                        echo "Running docker container......."
+                        sshpass -p 'Saptm170@' ssh -o StrictHostKeyChecking=no ${USERNAME}@${HOSTNAME} "${SCRIPT2}"
+                        res2=1
+                        break
+                       else
+                        echo "Non-empty node"
+                        res2=0
+                       fi
+                      done
+                     }
+
+                     while true
+                     do
+                      status
+                      echo $res2
+                      if [ $res2 -eq 0 ]
+                      then
+                       sleep 2m
+                      else
+                       echo $res2
+                       break
+                      fi
+                     done
+                  '''
+              echo "this is the Test stage"
+
+			}
+        }
+        stage('stage 3') {
+            steps {
+              echo "this is the Deploy stage"
+            }
+        }
+    }
+
+}
